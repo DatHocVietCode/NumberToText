@@ -24,9 +24,11 @@ public class NumToText {
 	public String removeDuplicateBetween(String input) {
 	    String[] keywords = {"ngàn", "triệu", "tỷ"}; // Các từ cần kiểm tra
 	    for (String keyword : keywords) {
+	    	
 	        // Tìm tất cả các từ trùng nhau
 	        String regex = "\\b" + keyword + "\\b.*?\\b" + keyword + "\\b"; 
 	        while (true) {
+	        	
 	            // Lưu giá trị đầu vào tạm thời
 	            String temp = input;
 
@@ -44,10 +46,8 @@ public class NumToText {
 	            } else {
 	                break; // Không tìm thấy từ trùng nào, thoát khỏi vòng lặp
 	            }
-
-	            // Kiểm tra xem giá trị đã thay đổi chưa
 	            if (input.equals(temp)) {
-	                break; // Nếu không thay đổi gì, thoát khỏi vòng lặp
+	                break; 
 	            }
 	        }
 	    }
@@ -79,8 +79,8 @@ public class NumToText {
 		if (index == -1) {
 			return result + NumToText[num];
 		}
-		else {
-		
+		else
+		{		
 			while (num != 0 && index != -1)
 			{
 				int devider = l_devider[index];
@@ -88,10 +88,9 @@ public class NumToText {
 				int remainder = num % devider;
 				result += NumToText[quotient] + " " + text_devider[index] + " ";
 				num = remainder;
-				index--;
-				
-				System.out.println(result);
-				System.out.println(num);
+				index--;				
+//				System.out.println(result);
+//				System.out.println(num);
 			}
 			
 			if (num != 0 ) {
@@ -99,28 +98,26 @@ public class NumToText {
 			}
 			
 			result = removeDuplicateBetween(result);
-			System.out.println("after " + result);
+//			System.out.println(result);
 			Map<String, String> exceptions = new HashMap<String, String>();
 			
 			// Trường hợp logic
-			
-			//exceptions.put("không trăm ngàn\\s+không mươi ngàn\\s+không ngàn", ""); 
+			 
 			exceptions.put("không trăm\\s*không mươi\\s*không (tỷ|triệu|ngàn)", "");
-//			exceptions.put("không trăm triệu\\s+không mươi triệu\\s+không triệu", ""); 
-//			exceptions.put("không trăm tỷ\\s+không mươi tỷ\\s+không tỷ", "");
 //			exceptions.put("không mươi tỷ\\s+không tỷ", "");
 //			exceptions.put("không mươi triệu\\s+không triệu", "");
 			exceptions.put("không mươi ngàn\\s+không ngàn", "");
 			exceptions.put("không trăm\\s+(triệu|ngàn)", "không trăm");
+			exceptions.put("\\s+", " "); // Replace multiple spaces with single space
 			exceptions.put("không mươi", "linh"); 
 			
 			// Trường hợp giọng đọc
 			
-			exceptions.put("một mươi", "mười");
-			exceptions.put("mươi năm", "mươi lăm");
+			exceptions.put("một\\s+mươi", "mười");
+			exceptions.put("mười\\s+năm", "mười lăm");
+			exceptions.put("mươi\\s+năm", "mươi lăm");
 			exceptions.put("không triệu", "triệu");
 			exceptions.put("không ngàn", "ngàn");
-			exceptions.put("\\s+", " "); // Replace multiple spaces with single space
 			exceptions.put("mươi một", "mươi mốt");
 
 			for (Entry<String, String> entry : exceptions.entrySet()) {
